@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HD</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            border-color: #d0d0d0;
+            border-style: solid;
+            border-width: 1px;
+            box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ac0404;
+            font-family: Lato, sans-serif;
+            font-size: 60px;
+            font-weight: 300;
+        }
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+        .radio-container label {
+            display: inline-block;
+            margin-right: 20px; /* ปรับระยะห่างระหว่างปุ่มเลือก */
+            margin-top: 5px;
+        }
+        .date_consult label {
+            display: inline-block;
+            margin-right: 20px; /* ปรับระยะห่างระหว่างปุ่มเลือก */
+            margin-top: 5px;
+            margin-bottom: 20px;
+        
+        }
+        .waitday label {
+            display: inline-block;
+            margin-right: 20px; /* ปรับระยะห่างระหว่างปุ่มเลือก */
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+        .trace_prob,
+        .remaintime {
+            background-color: #ffe3e3;
+            padding: 1rem;
+            border: 1px solid #f7bebe;
+            border-radius: 4px;
+            margin-top: 1rem;
+            color: #333;
+        }
+        .trace_slope { 
+            margin-top: 1rem;     
+        }
+    </style>
+</head>
+<body>
+    <h2>HD</h2>
+    <div class="container">      
+        <div class="input-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" placeholder="Enter age">
+        </div>
+        <div class="input-group">
+            <label for="sbp">Systolic Blood Pressure (mmHg):</label>
+            <input type="number" id="sbp" placeholder="Enter systolic blood pressure">
+        </div>
+        <div class="input-group">
+            <label for="bmi">BMI (kg/m²):</label>
+            <input type="number" id="bmi" placeholder="Enter BMI">
+        </div>
+        <div class="input-group">
+            <label for="CA">Serum Ca (mg/dl):</label>
+            <input type="number" id="ca" placeholder="Enter Ca serum level">
+        </div>
+        <div class="input-group">
+            <label for="CKD Cause">CKD Causes:</label>
+            <select id="cause">
+                <option value="" disabled selected>Select CKD Causes</option>
+                <option value="0">Cause 0</option>
+                <option value="1">Cause 1 </option>
+                <option value="2">Cause 2</option>
+                <option value="3">Cause 3</option>
+                <option value="4">Cause 4</option>
+              </select>
+        </div>
+        <div class="input-group">
+            <label for="gfr_0_months_ago">GFR 0 Months (Referral) (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_0_months_ago" placeholder="Enter GFR 0 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_1_months_ago">GFR 1 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_1_months_ago" placeholder="Enter GFR 1 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_2_months_ago">GFR 2 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_2_months_ago" placeholder="Enter GFR 2 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_3_months_ago">GFR 3 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_3_months_ago" placeholder="Enter GFR 3 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_4_months_ago">GFR 4 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_4_months_ago" placeholder="Enter GFR 4 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_5_months_ago">GFR 5 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_5_months_ago" placeholder="Enter GFR 5 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_6_months_ago">GFR 6 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_6_months_ago" placeholder="Enter GFR 6 months ago">
+        </div>
+        <div class="trace_prob" id="trace_prob"></div>
+        <div class="trac_value" id="trace"></div>
+    </div>
+
+    <script>
+   //calculation start here
+    function calculateSlope() {
+    var age = parseFloat(document.getElementById('age').value);
+    var bmi = parseFloat(document.getElementById('bmi').value);
+    var sbp = parseFloat(document.getElementById('sbp').value);
+    var ca = parseFloat(document.getElementById('ca').value);
+    var baseline = parseFloat(document.getElementById('gfr_0_months_ago').value);
+    var cause = parseFloat(document.getElementById('cause').value);
+
+    //init for calculate  slope
+    const xtime = [11,10,9,8,7,6,5];
+    var x = [];
+    var y = [];
+
+    //correct data from monthly gfr
+    for (let i = 0; i <xtime.length; i++) {
+        let yi = parseFloat(document.getElementById('gfr_' + i + '_months_ago').value);
+        if (!isNaN(yi)) {
+            y.push(yi);
+            x.push(xtime[i]);
+        }
+    }
+
+    //initial var for linear regress
+    let n = y.length;
+    let sumX = x.slice(0, n).reduce((a, b) => a + b, 0);
+    let sumY = y.reduce((a, b) => a + b, 0);
+    let sumXY = 0;
+    let sumX2 = 0;
+        
+    // linear regression correct data
+    for (let i = 0; i < n; i++) {
+        sumXY += x[i] * y[i];
+        sumX2 += x[i] * x[i];
+    }
+
+    // linear regression equation
+    let gfrslope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+   
+    // coef logit
+    const l_gfrslope = -1.13676,
+          l_sbp1 = -1.039398,
+          l_sbp2 =  .2155995,
+          l_sbp3 = .8443525,
+          l_bmi1 =  1.468301,
+          l_bmi2 = 1.530305,
+          l_bmi3 = -.0005461, 
+          l_ca = -.0804108,
+          l_age =  -.0005548,
+          l_cause1 = -.7201045,
+          l_cause2 = -.3971263,
+          l_cause3 = -.3992111,
+          l_cause4 =  -1.864703,
+          l_cons = 7.99813;
+
+    // bmi part
+
+    let bmi_cat;
+    switch (true) { // ใช้ true เพื่อให้ตรวจสอบค่าต่าง ๆ ใน case
+        case (bmi < 18.5):
+            bmi_cat = 0;
+        break;
+        case (bmi >= 18.5 && bmi < 25.0):
+            bmi_cat = 1;
+        break;
+        case (bmi >= 25.0 && bmi < 30.0):
+            bmi_cat = 2;
+        break;
+        case (bmi >= 30.0):
+            bmi_cat = 3;
+        break;
+    }
+
+    let bmi_cons;
+    switch (true) { // ใช้ true เพื่อให้ตรวจสอบค่าต่าง ๆ ใน case
+        case (bmi_cat==0):
+            bmi_cons = 0;
+        break;
+        case (bmi_cat==1):
+            bmi_cons = l_bmi1;
+        break;
+        case (bmi_cat==2):
+            bmi_cons = l_bmi2;
+        break;
+        case (bmi_cat==3):
+            bmi_cons = l_bmi3;
+        break;
+    }
+
+    //sbp part
+    let sbp_cat;
+    switch (true) { 
+        case (sbp < 120):
+            sbp_cat = 0;
+        break;
+        case (sbp >= 120 && sbp < 140):
+            sbp_cat = 1;
+        break;
+        case (sbp >= 140 && sbp < 160):
+            sbp_cat = 2;
+        break;
+        case (sbp >= 160):
+            sbp_cat = 3;
+        break;
+    }
+
+    let sbp_cons;
+    switch (true) { 
+        case (sbp_cat==0):
+            sbp_cons = 0;
+        break;
+        case (sbp_cat==1):
+            sbp_cons = l_sbp1;
+        break;
+        case (sbp_cat==2):
+            sbp_cons = l_sbp2;
+        break;
+        case (sbp_cat==3):
+            sbp_cons = l_sbp3;
+        break;
+    }
+    //cause part
+    let cause_cons;
+    switch (true) { 
+        case (cause==0):
+            cause_cons = 0;
+        break;
+        case (cause==1):
+            cause_cons = l_cause1;
+        break;
+        case (cause==2):
+            cause_cons = l_cause2;
+        break;
+        case (cause==3):
+            cause_cons = l_cause3;
+        break;
+        case (cause==4):
+            cause_cons = l_cause4;
+        break;
+    }
+
+    let age_sq = age**2;
+    let ca_sq = ca**2;
+    let log_odds,prob,prob_show;
+
+    //logistic regression
+        log_odds = (gfrslope*l_gfrslope+bmi_cat*bmi_cons+sbp_cat*sbp_cons+
+        age_sq*l_age+ca_sq*l_ca+cause*cause_cons+l_cons);
+     
+
+        prob = (1/(1+Math.exp(-log_odds)));
+        prob_show = prob*100;
+        prob_show = Math.min(prob_show, 100);
+        prob_show = Math.max(prob_show,0);
+    
+    //Result
+    //document.getElementById('trace_y').innerText = `log_odds: ${log_odds}`;
+    //document.getElementById('remaintime').innerText = `Remaining times: ${remaintime} days\n`;
+    document.getElementById('trace_prob').innerText = `Probability HD is: ${prob_show.toFixed(2)}%`;
+    }
+
+    //Event Listener  
+    document.getElementById('age').addEventListener('input', calculateSlope);
+    document.getElementById('bmi').addEventListener('input', calculateSlope);
+    document.getElementById('sbp').addEventListener('input', calculateSlope);
+    document.getElementById('ca').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_0_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_1_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_2_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_3_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_4_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_5_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_6_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('cause').addEventListener('input', function() {
+        var cause = parseFloat(this.value); // แปลงค่า value ที่เลือกเป็นตัวเลข
+        console.log(cause); // สำหรับตรวจสอบค่าใน Console
+        calculateSlope(); // เรียกใช้ฟังก์ชัน calculateSlope
+    });
+   
+    </script>
+</body>
+</html>
+
