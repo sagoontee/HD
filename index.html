@@ -103,15 +103,15 @@
             <label for="CKD Cause">CKD Causes:</label>
             <select id="cause">
                 <option value="" disabled selected>Select CKD Causes</option>
-                <option value="0">Cause 0</option>
-                <option value="1">Cause 1 </option>
-                <option value="2">Cause 2</option>
-                <option value="3">Cause 3</option>
-                <option value="4">Cause 4</option>
+                <option value="0">PCKD</option>
+                <option value="1">DM</option>
+                <option value="2">Hypertension</option>
+                <option value="3">Glomerular disease</option>
+                <option value="4">Others/Unknown</option>
               </select>
         </div>
         <div class="input-group">
-            <label for="gfr_0_months_ago">GFR 0 Months (Referral) (ml/min/1.73m²):</label>
+            <label for="gfr_0_months_ago">GFR 0 Months (RTT counseling) (ml/min/1.73m²):</label>
             <input type="number" id="gfr_0_months_ago" placeholder="Enter GFR 0 months ago">
         </div>
         <div class="input-group">
@@ -138,6 +138,30 @@
             <label for="gfr_6_months_ago">GFR 6 Months Ago (ml/min/1.73m²):</label>
             <input type="number" id="gfr_6_months_ago" placeholder="Enter GFR 6 months ago">
         </div>
+        <div class="input-group">
+            <label for="gfr_7_months_ago">GFR 7 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_7_months_ago" placeholder="Enter GFR 7 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_8_months_ago">GFR 8 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_8_months_ago" placeholder="Enter GFR 8 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_9_months_ago">GFR 9 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_9_months_ago" placeholder="Enter GFR 9 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_10_months_ago">GFR 10 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_10_months_ago" placeholder="Enter GFR 10 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_11_months_ago">GFR 11 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_11_months_ago" placeholder="Enter GFR 11 months ago">
+        </div>
+        <div class="input-group">
+            <label for="gfr_12_months_ago">GFR 12 Months Ago (ml/min/1.73m²):</label>
+            <input type="number" id="gfr_12_months_ago" placeholder="Enter GFR 12 months ago">
+        </div>
         <div class="trace_prob" id="trace_prob"></div>
         <div class="trac_value" id="trace"></div>
     </div>
@@ -153,7 +177,7 @@
     var cause = parseFloat(document.getElementById('cause').value);
 
     //init for calculate  slope
-    const xtime = [11,10,9,8,7,6,5];
+    const xtime = [11,10,9,8,7,6,5,4,3,2,1,0];
     var x = [];
     var y = [];
 
@@ -316,6 +340,12 @@
     document.getElementById('gfr_4_months_ago').addEventListener('input', calculateSlope);
     document.getElementById('gfr_5_months_ago').addEventListener('input', calculateSlope);
     document.getElementById('gfr_6_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_7_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_8_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_9_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_10_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_11_months_ago').addEventListener('input', calculateSlope);
+    document.getElementById('gfr_12_months_ago').addEventListener('input', calculateSlope);
     document.getElementById('cause').addEventListener('input', function() {
         var cause = parseFloat(this.value); // แปลงค่า value ที่เลือกเป็นตัวเลข
         console.log(cause); // สำหรับตรวจสอบค่าใน Console
